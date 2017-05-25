@@ -1,0 +1,122 @@
+<view class="container">
+  <view class="title">青语鲜食</view>
+
+  <!--<view class="search-wrapper">
+    <input type="search" style="width:{{width}}px" bindfocus="focusInput" bindconfirm="doSearch" placeholder="搜索" bindblur="hideSearch" bindinput="searchChange" confirm-type="search"></input>
+  </view>-->
+  <view class="page__bd">
+    <view class="weui-search-bar">
+      <view class="weui-search-bar__form">
+        <view class="weui-search-bar__box">
+          <icon class="weui-icon-search_in-box" type="search" size="14"></icon>
+          <input type="text" class="weui-search-bar__input" placeholder="搜索" value="{{inputVal}}" focus="{{inputShowed}}" bindinput="inputTyping" />
+          <view class="weui-icon-clear" wx:if="{{inputVal.length > 0}}" bindtap="clearInput">
+            <icon type="clear" size="14"></icon>
+          </view>
+        </view>
+        <label class="weui-search-bar__label" hidden="{{inputShowed}}" bindtap="showInput">
+          <icon class="weui-icon-search" type="search" size="14"></icon>
+          <view class="weui-search-bar__text">搜索</view>
+        </label>
+      </view>
+      <view class="weui-search-bar__cancel-btn" hidden="{{!inputShowed}}" bindtap="hideInput">取消</view>
+    </view>
+    <scroll-view scroll-y class="weui-cells searchbar-result" wx:if="{{inputVal.length > 0}}">
+
+      <view wx:for="{{searchResults}}">
+        <view bindtap="click" id="{{item.location.lat}}-{{item.location.lng}}" class="weui-cell" hover-class="weui-cell_active">
+          <view class="weui-cell__bd">
+            <view>{{item.title}}</view>
+          </view>
+        </view>
+      </view>
+
+    </scroll-view>
+  </view>
+
+  <view class="button-wrapper">
+    <button type="default">统计</button>
+  </view>
+
+  <map id="myMap" longitude="{{myLng}}" latitude="{{myLat}}" scale="{{scale}}" controls="{{controls}}" bindcontroltap="controltap" markers="{{markers}}" bindmarkertap="markertap" polyline="{{polyline}}" bindregionchange="regionchange" bindtap="tapMap" show-location
+    style="width:100%;height:83%;position:fixed;bottom:0;top:200rpx;"></map>
+  <view class="zan-dialog {{ showDialog ? 'zan-dialog--show' : '' }}">
+    <view class="zan-dialog__mask" bindtap="markertap" />
+    <view class="zan-dialog__container">
+      <view class="dialog-container">
+        <view class="kou_bg">
+          <view class="kou" bindtap="markertap">
+            <image style="width:36rpx;height:36rpx;margin-left:12rpx;margin-top:12rpx" src="/resources/close.png"></image>
+          </view>
+        </view>
+
+        <view class="dialog-logo">
+          <image style="width:310rpx;height:83rpx;" src="/resources/logo.png"></image>
+        </view>
+        <view class="dialog-title">
+          {{currentItem.showName}}
+          <view class="dialog-line">
+          </view>
+        </view>
+        <!--
+        <view style="padding:50rpx;font-size:36rpx">
+          {{currentItem.intro}}
+        </view>
+        -->
+        <view style=" text-align: center;">
+          <view>
+            联系方式:{{currentItem.phone}}
+          </view>
+        </view>
+        <view style="padding-left:60rpx;padding-right:60rpx;margin-top:50rpx;margin-bottom:80rpx;text-align:center;">
+          {{currentItem.intro}}
+          <view class="dialog-bottom-line">
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="zan-dialog {{ showAddDialog ? 'add-dialog--show' : '' }}">
+    <view class="zan-dialog__mask" bindtap="closeAddDialog" />
+    <view class="zan-dialog__container">
+      <view class="dialog-container">
+        <view class="kou_bg">
+          <view class="kou" bindtap="closeAddDialog">
+            <image style="width:36rpx;height:36rpx;margin-left:12rpx;margin-top:12rpx" src="/resources/close.png"></image>
+          </view>
+        </view>
+        <view class="dialog-title">
+          添加店铺
+        </view>
+        <!--
+        <view style="padding:50rpx;font-size:36rpx">
+          {{currentItem.intro}}
+        </view>
+        -->
+        <view style="text-align: center;">
+          <view class="zan-form">
+            <view class="zan-cell zan-form__item">
+              <image src="/resources/user.png" style="width:30rpx;height:34rpx"></image>
+              <text class="zan-form__title">名称:</text>
+              <input maxlength="12" bindinput="InputShowName" class="zan-form__input zan-cell__bd" placeholder="名字" />
+            </view>
+            <view class="zan-cell zan-form__item">
+              <image src="/resources/phone.png" style="width:30rpx;height:34rpx"></image>
+              <text class="zan-form__title">联系电话:</text>
+              <input maxlength="13" bindinput="InputPhone" class="zan-form__input zan-cell__bd" type="number" placeholder="手机或固定电话" />
+            </view>
+            <view class="zan-cell zan-form__item zan-form__textarea ">
+              <image src="/resources/note.png" style="width:30rpx;height:34rpx"></image>
+              <text class="zan-form__title">简介:</text>
+              <textarea maxlength="70" bindinput="InputIntro" class="zan-cell__bd"  placeholder="简介" />
+            </view>
+          </view>
+        </view>
+        <view style="padding-bottom:20rpx;padding-top:20rpx;text-align:center;">
+          <button class="add-btn " bindtap="submit">提交</button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
